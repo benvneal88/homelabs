@@ -13,8 +13,6 @@ services:
       - /home/docker/linuxgsm/vhserver/log:/home/linuxgsm/log
       - /home/docker/linuxgsm/vhserver/config-lgsm:/home/linuxgsm/lgsm/config-lgsm
     ports:
-      - "27015:27015/tcp"
-      - "27015:27015/udp"
-      - "27020:27020/udp"
-      - "27005:27005/udp"
+      - "2456:2456/udp"
+      - "2457:2457/udp"
     restart: unless-stopped

@@ -128,6 +128,7 @@ RUN (crontab -l 2>/dev/null; echo "*/30 * * * * /home/linuxgsm/*server update > 
 RUN (crontab -l 2>/dev/null; echo "0 1 * * 0 /home/linuxgsm/*server update-lgsm > /dev/null 2>&1") | crontab -
 
 COPY entrypoint.sh /home/linuxgsm/entrypoint.sh
+COPY vhserver.cfg /home/linuxgsm/lgsm/config-lgsm/vhserver/vhserver.cfg
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "bash","./entrypoint.sh" ]

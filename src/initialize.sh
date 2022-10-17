@@ -17,11 +17,8 @@ sudo apt-get update
 # verify openssh is installed
 sudo apt install openssh-server
 
+# install git
 sudo apt install git
-
-sudo apt install git
-
-
 git config --global user.name "gsm_admin"
 git config --global user.email "gsm_admin@homelabs.com"
 
@@ -31,12 +28,11 @@ mkdir /home/gsm_admin/homelabs
 # generate key pair for git. add pub ssh key to github
 ssh-keygen
 
+# clone the repo 
 git clone git@github.com:benvneal88/homelabs.git
 
-# To prevent your Linux system from suspending or going into hibernation, you need to disable the following systemd targets:
+# To prevent your Linux system from suspending or going into hibernation, disable the following systemd targets:
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
-
-ssh gsm_admin@192.168.86.240
 
 
 
@@ -56,7 +52,18 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
-# teest
-sudo docker run hello-world
+# add user to docker group for permissions
+sudo usermod -a -G docker gsm_admin
+
+# test
+sudo docker run hello-world 
+
+# run container
+docker compose up
+docker exec -it vhserver ./vhserver details 
+
+
+
+ssh gsm_admin@192.168.86.240
