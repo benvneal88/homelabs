@@ -13,6 +13,5 @@ services:
       - /home/docker/linuxgsm/pzserver/log:/home/linuxgsm/log
       - /home/docker/linuxgsm/pzserver/config-lgsm:/home/linuxgsm/lgsm/config-lgsm
     ports:
-      - "2456:2456/udp"
-      - "2457:2457/udp"
+      - "16261:16261/udp"
     restart: unless-stopped
