@@ -19,10 +19,12 @@ Below is an example `docker-compose` for csgoserver. Ports will vary depending u
 version: '3.4'
 services:
   linuxgsm:
-    image: "ghcr.io/gameservermanagers/linuxgsm-docker:latest"
-    container_name: csgoserver
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: vhserver
     environment:
-      - GAMESERVER=csgoserver
+      - GAMESERVER=vhserver
       - LGSM_GITHUBUSER=GameServerManagers
       - LGSM_GITHUBREPO=LinuxGSM
       - LGSM_GITHUBBRANCH=master
@@ -40,6 +42,9 @@ services:
 # First Run
 Edit the `docker-compose.yml` file changing `GAMESERVER=` to the game server of choice.
 On first run linuxgsm will install your selected server and will start running. Once completed the game server details will be output.
+```
+docker compose -f pdocker-compose.yml up
+```
 ## Game Server Ports
 Each game server has its own port requirements. Becuase of this you will need to configure the correct ports in your `docker-compose` after first run. The required ports are output once installation is completed and everytime the docker container is started.
 ## Volumes
@@ -49,8 +54,6 @@ volumes are required to save persistant data for your game server. The example a
 Commands can be run just like standard LinuxGSM using the docker exec command.
 
 ```
-
-docker exec -it csgoserver ./csgoserver details
-
+docker exec -it vhserver ./vhserver details
 ```
 #

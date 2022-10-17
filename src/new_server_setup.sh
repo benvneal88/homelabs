@@ -69,11 +69,4 @@ sudo usermod -a -G docker gsm_admin
 # test
 sudo docker run hello-world 
 
-# run container
-docker compose -f src/linuxgsm/ci/vhserver/docker-compose.yml up
-docker compose -f src/linuxgsm/ci/pzserver/docker-compose.yml up
-
-docker exec -it vhserver ./vhserver details 
-docker exec -it vhserver ./vhserver details 
-
-ssh gsm_admin@192.168.86.240
+#ssh gsm_admin@192.168.86.240
