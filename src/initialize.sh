@@ -64,6 +64,7 @@ sudo docker run hello-world
 docker compose up
 docker exec -it vhserver ./vhserver details 
 
-
+docker compose -f src/linuxgsm_build/docker-compose_pzserver.yml up
+docker compose -f src/linuxgsm_build/docker-compose_vhserver.yml up
 
 ssh gsm_admin@192.168.86.240

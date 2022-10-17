@@ -1,0 +1,18 @@
+version: '3.4'
+services:
+  linuxgsm:
+    image: "ghcr.io/gameservermanagers/linuxgsm-docker:latest"
+    container_name: pzserver
+    environment:
+      - GAMESERVER=pzserver
+      - LGSM_GITHUBUSER=GameServerManagers
+      - LGSM_GITHUBREPO=LinuxGSM
+      - LGSM_GITHUBBRANCH=master
+    volumes:
+      - /home/docker/linuxgsm/pzserver/serverfiles:/home/linuxgsm/serverfiles
+      - /home/docker/linuxgsm/pzserver/log:/home/linuxgsm/log
+      - /home/docker/linuxgsm/pzserver/config-lgsm:/home/linuxgsm/lgsm/config-lgsm
+    ports:
+      - "2456:2456/udp"
+      - "2457:2457/udp"
+    restart: unless-stopped
