@@ -1,7 +1,17 @@
+#################################
+##
+##  New Debian Server Setup
+##
+#################################
 
+#####
+## Useful commands
+#####
 # get hostname detail
-hostnamectl
+# hostnamectl
 
+
+########################
 # initial root env
 su -
 
@@ -17,13 +27,13 @@ sudo apt-get update
 # verify openssh is installed
 sudo apt install openssh-server
 
-# install git
+# install and configure git
 sudo apt install git
 git config --global user.name "gsm_admin"
 git config --global user.email "gsm_admin@homelabs.com"
 
-mkdir /home/gsm_admin/homelabs
-
+# Go to directory for git repo save locations
+cd /home/gsm_admin/
 
 # generate key pair for git. add pub ssh key to github
 ssh-keygen
@@ -45,7 +55,6 @@ sudo apt-get install \
     gnupg \
     lsb-release
 
-
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 echo \
@@ -61,10 +70,10 @@ sudo usermod -a -G docker gsm_admin
 sudo docker run hello-world 
 
 # run container
-docker compose up
-docker exec -it vhserver ./vhserver details 
+docker compose -f src/linuxgsm/ci/vhserver/docker-compose.yml up
+docker compose -f src/linuxgsm/ci/pzsever/docker-compose.yml up
 
-docker compose -f src/linuxgsm_build/docker-compose_pzserver.yml up
-docker compose -f src/linuxgsm_build/docker-compose_vhserver.yml up
+docker exec -it vhserver ./vhserver details 
+docker exec -it vhserver ./vhserver details 
 
 ssh gsm_admin@192.168.86.240
