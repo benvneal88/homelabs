@@ -1,7 +1,9 @@
 version: '3.4'
 services:
   linuxgsm:
-    build: .
+    build: 
+      context: .
+      dockerfile: vh.Dockerfile
     container_name: vhserver
     environment:
       - GAMESERVER=vhserver

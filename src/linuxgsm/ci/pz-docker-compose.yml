@@ -1,7 +1,9 @@
 version: '3.4'
 services:
   linuxgsm:
-    build: .
+    build: 
+      context: .
+      dockerfile: pz.Dockerfile
     container_name: pzserver
     environment:
       - GAMESERVER=pzserver
