@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   linuxgsm:
-    image: "ghcr.io/gameservermanagers/linuxgsm-docker:latest"
+    build: .
     container_name: pzserver
     environment:
       - GAMESERVER=pzserver
