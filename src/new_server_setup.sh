@@ -71,7 +71,7 @@ sudo docker run hello-world
 
 # run container
 docker compose -f src/linuxgsm/ci/vhserver/docker-compose.yml up
-docker compose -f src/linuxgsm/ci/pzsever/docker-compose.yml up
+docker compose -f src/linuxgsm/ci/pzserver/docker-compose.yml up
 
 docker exec -it vhserver ./vhserver details 
 docker exec -it vhserver ./vhserver details 

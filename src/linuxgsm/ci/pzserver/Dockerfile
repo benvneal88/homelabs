@@ -135,9 +135,6 @@ RUN (crontab -l 2>/dev/null; echo "0 1 * * 0 /home/linuxgsm/*server update-lgsm 
 
 COPY entrypoint.sh /home/linuxgsm/entrypoint.sh
 
-# Add Valheim Configuraton Files
-COPY vhserver/vhserver.cfg /home/linuxgsm/lgsm/config-lgsm/vhserver/vhserver.cfg
-
 # Add Project Zomboid Configuraton Files
 COPY pzserver/pzserver.ini /home/linuxgsm/Zomboid/Server/pzserver.ini
 
