@@ -14,6 +14,32 @@ def get_docker_client():
     return docker.from_env()
 
 
+def copy_file_to_container(container, source_file_path, target_file_path):
+    logger = get_logger()
+    file_name = os.path.basename(source_file_path)
+    with open(source_file_path, 'r') as file:
+        file_data = file.read()
+
+    print(file_data)
+    with tarfile.open(file_name + '.tar', mode='w') as tar:
+        tar.add(file_data)
+
+    data = open(file_name + '.tar', 'rb').read()
+    container.put_archive(os.path.dirname(target_file_path), data)
+
+
+def copy_file_from_container(container, source_file_path, target_file_path):
+    logger = get_logger()
+    tarfile = container.from_archive(source_file_path)
+    file_name = os.path.basename(source_file_path)
+
+    print(file_data)
+    with tarfile.open(tarfile, mode='r') as tar:
+        file_data = tar.extract()
+
+    with open(target_file_path, 'w') as file:
+        file = file_data.write()
+
 def patch_game_server(server_name):
     """
     Copies server files to game server and restarts the server
@@ -37,11 +63,7 @@ def patch_game_server(server_name):
                 transformed_file_buffer = source_file_buffer.replace("PZ_SERVER_PASSWORD", )
                 #print(source_file_buffer)
 
-            # with tarfile.open(server_patch_path + '.tar', mode='w') as tar:
-            #     try:
-            #         tar.add(srcname)
-            #     finally:
-            #         tar.close()
+
 
     else:
         logger.error(f"Server {server_name} not found ")

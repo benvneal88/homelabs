@@ -67,6 +67,8 @@ sudo usermod -a -G docker gsm_admin
 # test
 sudo docker run hello-world 
 
+#copy file from docker
+docker exec pzserver cp
 
 # Python setup
 apt-get install python3-venv
