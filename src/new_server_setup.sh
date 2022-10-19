@@ -44,8 +44,6 @@ git clone git@github.com:benvneal88/homelabs.git
 # To prevent your Linux system from suspending or going into hibernation, disable the following systemd targets:
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
-
-
 # install docker 
 # https://docs.docker.com/engine/install/debian/
 
@@ -68,5 +66,13 @@ sudo usermod -a -G docker gsm_admin
 
 # test
 sudo docker run hello-world 
+
+
+# Python setup
+apt-get install python3-venv
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+
 
 #ssh gsm_admin@192.168.86.240
