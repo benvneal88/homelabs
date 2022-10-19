@@ -16,27 +16,32 @@ def get_docker_client():
 
 def copy_file_to_container(container, source_file_path, target_file_path):
     logger = get_logger()
-    file_name = os.path.basename(source_file_path)
+
+    logger.info(f"Reading file {source_file_path}")
     with open(source_file_path, 'r') as file:
         file_data = file.read()
 
-    print(file_data)
+    file_name = os.path.basename(source_file_path)
+    logger.info(f"Converting to tar file {file_name + '.tar'}")
     with tarfile.open(file_name + '.tar', mode='w') as tar:
         tar.add(file_data)
 
     data = open(file_name + '.tar', 'rb').read()
+    logger.info(f"Tar data {data}")
+
+    logger.info(f"Saving file {os.path.dirname(target_file_path)} to container {container.name}")
     container.put_archive(os.path.dirname(target_file_path), data)
 
 
 def copy_file_from_container(container, source_file_path, target_file_path):
     logger = get_logger()
+   
+    logger.info(f"Copying file {source_file_path} from container {container.name}")
     tarfile = container.from_archive(source_file_path)
-    file_name = os.path.basename(source_file_path)
-
-    print(file_data)
     with tarfile.open(tarfile, mode='r') as tar:
         file_data = tar.extract()
 
+    logger.info(f"Saving file to {target_file_path}")
     with open(target_file_path, 'w') as file:
         file = file_data.write()
 
