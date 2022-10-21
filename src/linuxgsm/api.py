@@ -89,7 +89,8 @@ def patch_game_server(server_name):
         logger.error(f"Server {server_name} not found ")
         #TODO: exit handling
 
-    patch_config = json.load("src/linuxgsm/patch_config.json")
+    with open(os.path.join(os.path.getcwd(), "src/linuxgsm/patch_config.json")) as file:
+        patch_config = json.load(file)
 
     for patch_file_dict in patch_config[server_name]:
             
