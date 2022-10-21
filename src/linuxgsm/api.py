@@ -4,33 +4,41 @@ import docker
 import logging
 import tarfile
 import re
+import io
 
+def get_logger(level='INFO'):
+    logger =  logging.getLogger(__name__)
 
-def get_logger():
-    return logging.getLogger(__name__)
+    if level.lower() == 'info':
+        logger.setLevel(logging.INFO)
+    else:
+        logger.setLevel(logging.DEBUG)
+        
+    if not logger.hasHandlers():
+        handler = logging.StreamHandler()
+        handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+        logger.addHandler(handler)
+
+    return logger
 
 
 def get_docker_client():
     return docker.from_env()
 
 
-def copy_file_to_container(container, source_file_path, target_file_path):
+def copy_file_to_container(container, source_file_path, target_dir_path):
     logger = get_logger()
 
-    logger.info(f"Reading file {source_file_path}")
-    with open(source_file_path, 'r') as file:
-        file_data = file.read()
-
     file_name = os.path.basename(source_file_path)
-    logger.info(f"Converting to tar file {file_name + '.tar'}")
-    with tarfile.open(file_name + '.tar', mode='w') as tar:
-        tar.add(file_data)
+    logger.info(f"Copying file {source_file_path} to container '{container.name}' to {target_dir_path}")
+    
+    stream = io.BytesIO()
+    with tarfile.open(fileobj=stream, mode='w|') as tar, open(source_file_path, 'rb') as f:
+        info = tar.gettarinfo(fileobj=f)
+        info.name = os.path.basename(source_file_path)
+        tar.addfile(info, f)
 
-    data = open(file_name + '.tar', 'rb').read()
-    logger.info(f"Tar data {data}")
-
-    logger.info(f"Saving file {os.path.dirname(target_file_path)} to container {container.name}")
-    container.put_archive(os.path.dirname(target_file_path), data)
+    container.put_archive(target_dir_path, stream.getvalue())
 
 
 def copy_file_from_container(container, source_file_path, target_file_path):
@@ -45,16 +53,19 @@ def copy_file_from_container(container, source_file_path, target_file_path):
     with open(target_file_path, 'w') as file:
         file = file_data.write()
 
+
 def patch_game_server(server_name):
     """
     Copies server files to game server and restarts the server
 
     """
-    #client = get_docker_client()
-    #container = client.containers.get(server_name)
+    
     logger = get_logger()
     
-    server_patch_path = os.path.join(os.getcwd(), server_name)
+    docker_client = get_docker_client()
+    container = docker_client.containers.get(server_name)
+
+    server_patch_path = os.path.join(os.getcwd(), 'src', 'linuxgsm', server_name)
     logger.info(f"Server patch path: {server_patch_path}")
     if os.path.exists(server_patch_path):
         os.chdir(server_patch_path)
@@ -65,10 +76,13 @@ def patch_game_server(server_name):
 
             with open(source_file_path, 'r') as file:
                 source_file_buffer = file.read()
-                transformed_file_buffer = source_file_buffer.replace("PZ_SERVER_PASSWORD", )
-                #print(source_file_buffer)
+                transformed_file_buffer = source_file_buffer.replace("PZ_SERVER_PASSWORD", "test")
+            
+            logger.info(f"Creating server file {transformed_file_path}")
+            with open(transformed_file_path, 'w') as file:
+                file.write(transformed_file_buffer)
 
-
+            copy_file_to_container(container, transformed_file_path, "")
 
     else:
         logger.error(f"Server {server_name} not found ")

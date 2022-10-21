@@ -78,3 +78,8 @@ pip install --upgrade pip
 
 
 #ssh gsm_admin@192.168.86.240
+
+
+# from src.linuxgsm import api
+# api.copy_file_to_container(api.get_docker_client().containers.get('pzserver'), "/home/gsm_admin/homelabs/src/linuxgsm/api.py", "/home/linuxgsm/")
+# api.patch_game_server('pzserver')
