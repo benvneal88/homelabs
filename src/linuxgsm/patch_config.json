@@ -2,8 +2,8 @@
     "pzserver":
         [
             {
-                "source_file_path" : "src/linuxgsm/template_server_config.txt",
-                "server_file_path" : "/home/linuxgsm/Zomboid/Server/${server_name}/${server_name}.ini",
+                "source_file_path" : "src/linuxgsm/pzserver/template_server_config.txt",
+                "server_file_path" : "/home/linuxgsm/Zomboid/Server/pzserver/pzserver.ini",
                 "find_replace_str" : {
                     "PZ_SERVER_PASSWORD": "${server_password}"
                 }
