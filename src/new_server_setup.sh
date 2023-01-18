@@ -17,9 +17,12 @@ su -
 
 # create new user
 adduser gsm_admin
+adduesr webserver_admin
 
 # add user to sudeors
 usermod -aG sudo gsm_admin
+usermod -aG sudo webserver_admin
+
 
 # update apt-get
 sudo apt-get update
