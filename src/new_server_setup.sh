@@ -44,6 +44,13 @@ ssh-keygen
 # clone the repo 
 git clone git@github.com:benvneal88/homelabs.git
 
+
+# clone webserver files
+mkdir /home/webserver_admin/ncaa_fantasy
+cd /home/webserver_admin/ncaa_fantasy
+git clone git@github.com:benvneal88/ncaa-bb-fantasy-manager.git
+
+
 # To prevent your Linux system from suspending or going into hibernation, disable the following systemd targets:
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
