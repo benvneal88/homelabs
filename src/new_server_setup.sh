@@ -49,6 +49,7 @@ git clone git@github.com:benvneal88/homelabs.git
 cd /home/webserver_admin/
 # generate key pair for git. add pub ssh key to github
 ssh-keygen
+sudo apt install gcc
 git clone git@github.com:benvneal88/ncaa-bb-fantasy-manager.git
 
 
