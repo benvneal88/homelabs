@@ -46,8 +46,9 @@ git clone git@github.com:benvneal88/homelabs.git
 
 
 # clone webserver files
-mkdir /home/webserver_admin/ncaa_fantasy
-cd /home/webserver_admin/ncaa_fantasy
+cd /home/webserver_admin/
+# generate key pair for git. add pub ssh key to github
+ssh-keygen
 git clone git@github.com:benvneal88/ncaa-bb-fantasy-manager.git
 
 
